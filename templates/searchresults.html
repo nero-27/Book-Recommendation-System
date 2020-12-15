@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../static/assets/img/favicon.png">
+  <title>
+    BRS
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
+</head>
+
+<body class="index-page">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-4">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'homepage' %}"><h1><em><font color="White">BRS</font></em></h1></a>
+          <div class="collapse navbar-collapse" id="navbar-primary">
+            <ul class="navbar-nav ml-lg-auto">
+              <li class="nav-item">
+                <div class="col" >
+              <form method="POST" name="Search" action="{% url 'searchn' %}">
+                {% csrf_token %}
+              <input type="text" class="form-control" placeholder="Book Title or Book Author" name="search">
+                </div>
+              </li>
+              <li class="nav-item">
+                <button type="submit" class="btn btn-primary btn-neutral">Search</button>
+            </form>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbar-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-primary_dropdown_1">
+                  <a class="dropdown-item" href="javascript:;">Action</a>
+                  <a class="dropdown-item" href="javascript:;">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+  <!-- End Navbar -->
+  <section class="section section-lg">
+    <div class="container">
+      <div class="row row-grid justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="text-primary">Search Results</h2>
+          <br>
+          <hr>
+          {% for item in cart %}
+          <div class="row">
+            <div class="container py-md">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-md-4">
+                  <div class="rounded overflow-hidden transform-perspective-left">
+                          <img class="img-fluid" src="{{ item.Image_URL_M }}" alt="Images">
+                  </div>
+                </div>
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                  <h4 class="font-weight-light">{{ item.Book_Title }}</h4>
+                  <footer class="blockquote-footer"> by
+                    <cite title="author">{{ item.Book_Author }}</cite>
+                  </footer>
+                  <p class="mb-0">ISBN : {{ item.ISBN }}</p>
+                  <form name="for-detail" method="POST" action="{% url 'description' %}">
+                {% csrf_token %}
+                  <input type="hidden" name="title" value="{{ item.Book_Title }}">
+                  <input type="hidden" name="author" value="{{ item.Book_Author }}">
+                  <input type="hidden" name="image" value="{{ item.Image_URL_M }}">
+                  <input type="hidden" name="synopsis" value="{{ item.Synopsis }}">
+                  <input type="hidden" name="publisher" value="{{ item.Publisher }}">
+                  <input type="hidden" name="isbn" value="{{ item.ISBN }}">
+                  <input type="hidden" name="price" value="{{ item.Book_Cost }}">
+                  <input type="submit" class="btn btn-white mt-4" name="btn" value="View...">
+                  </form>
+                  <br>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/jquery.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+</body>
+
+</html>

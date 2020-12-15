@@ -1,0 +1,111 @@
+<html>{% load static %}
+<head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons
+
+  -->
+  <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
+</head>
+<body>
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-4">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'homepage' %}"><h1><em><font color="White">BRS</font></em></h1></a>
+          <div class="collapse navbar-collapse" id="navbar-primary">
+            <ul class="navbar-nav ml-lg-auto">
+              <li class="nav-item">
+                <div class="col" >
+              <form method="POST" name="Search" action="{% url 'searchn' %}">
+                {% csrf_token %}
+              <input type="text" class="form-control" placeholder="Book Title or Book Author" name="search">
+                </div>
+              </li>
+              <li class="nav-item">
+                <button type="submit" class="btn btn-primary btn-neutral">Search</button>
+            </form>
+              </li>
+              <li class="nav-item">
+                  <button class="btn btn-primary btn-neutral">
+                     <a href="{% url 'logout' %}">
+                         <i class="ni ni-button-power"></i>
+                     </a>
+                  </button>
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+  <!-- End Navbar -->
+{% block content %}
+<div class="container">
+    <br>
+    <div class="col-md-6 mb-5 mb-md-0">
+        <div class="card shadow border-0">
+    <h2 class=" text-center">User Profile</h2>
+  {% for data in user %}
+            <table>
+                <tbody>
+                <tr>
+                    <td><h4>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Username:</h4></td>
+                    <td><h4><span class=" text-success mb-0 font-weight-bold">{{ data.Username}}</span></h4></td>
+                </tr>
+                <tr>
+                    <td><h4>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Age:</h4></td>
+                    <td><h4><span class=" text-success mb-0 font-weight-bold">{{ data.Age}}</span></h4></td>
+                </tr>
+                </tbody>
+            </table>
+  {% endfor %}
+    </div>
+</div>
+    <br>
+    <br>
+    <div class="card shadow">
+    <div class="card-body">
+    <span>
+        <div class="col-lg-12 text-center">
+        <h3 class="text-success" >BOOKS YOU HAVE RATED</h3>
+        </div>
+            <table class="table">
+                <thead class="text-warning">
+                    <tr>
+                        <th>Rating </th>
+                        <th class="text-left">Book Title</th>
+                        <th>Book Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 {% for book in books %}
+                    <tr>
+                        <td>{{ book.Book_Rating }}</td>
+                        <td>{{book.Book_Title}}</td>
+                        <td>{{book.Book_Author}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+    </span>
+    </div>
+    </div>
+
+</div>
+{% endblock %}
+</body>
+ <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/jquery.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+</html>
